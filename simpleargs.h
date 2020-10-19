@@ -21,18 +21,16 @@
 
 //-------------------------------------------------------------------------------------------------
 //
-template <typename T>
 class rSimpleArgs
 {
 private:
 	struct rItem
 	{
-		bool m_isSet;
-		T m_name;
-		T m_fullname;
-		T m_altname;
-		std::vector<T> m_values;
-		unsigned int m_count;
+		bool          m_isSwitch;
+		unsigned int  m_isSet;
+		std::string   m_fullname;
+		unsigned char m_shortname;
+		std::string   m_value;
 	};
 
 public:
@@ -44,23 +42,21 @@ private:
 	rSimpleArgs& operator=(rSimpleArgs& );
 
 public:
-	void setAltSplit(bool altsplit);
-	void setPrefix(const T& fullprefix, const T& altprefix);
-	void add(const T& name);
-	void add(const T& name, const T& altname);
-	void add(const T& name, const T& altname, unsigned int count = 1);
-	void parse(unsigned int argc, char **argv);
-	bool isSet(const T& name);
-	const T& getArg(const T& name);
-	const T& getArg(const T& name, unsigned int num);
+	rSimpleArgs& addSwitch(const std::string& name, const unsigned char altname);
+	rSimpleArgs& addOption(const std::string& name, const unsigned char altname, const std::string&  default_value);
+	unsigned int isSet(const std::string& name);
+	std::string  getOption(const std::string& name);
+	std::string  getArgument(unsigned int num);
+	unsigned int getCountArgument(void);
+	unsigned int parse(unsigned int argc, char **argv);
 
 private:
-	bool m_altSplit = true;
-	T    m_fullPrefix = "--";
-	T    m_altprefix  = "-";
 	std::vector<rSimpleArgs::rItem> m_list;
+	std::vector<std::string> m_argument;
 
-	const rItem* findItem(const T& name);
+	const rItem* findItem(const std::string& name);
+	void parseShort(const std::string& arg);
+	rItem* parseFull(const std::string& arg);
 };
 
 
