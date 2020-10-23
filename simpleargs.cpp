@@ -88,7 +88,7 @@ rSimpleArgs& rSimpleArgs::setSwitch(const std::string& name, bool isset)
 	return *this;
 }
 
-rSimpleArgs& rSimpleArgs::setOption(const std::string& name, const std::string&  value)
+rSimpleArgs& rSimpleArgs::setOption(const std::string& name, const std::string& value)
 {
 	rItem* item = findItem(name);
 
@@ -100,7 +100,7 @@ rSimpleArgs& rSimpleArgs::setOption(const std::string& name, const std::string& 
 	}
 
 	item->m_value = value;
-	item->m_isSet = isset;
+	item->m_isSet = true;
 
 	return *this;
 }
@@ -130,7 +130,7 @@ unsigned int rSimpleArgs::getCountArgument(void)
 
 //-------------------------------------------------------------------------------------------------
 //
-unsigned int rSimpleArgs::parse(unsigned int argc, char **argv)
+unsigned int rSimpleArgs::parse(unsigned int argc, const char **argv)
 {
 	rItem* curarg = nullptr;
 

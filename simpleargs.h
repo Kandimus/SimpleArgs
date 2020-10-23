@@ -43,12 +43,14 @@ private:
 
 public:
 	rSimpleArgs& addSwitch(const std::string& name, const unsigned char altname);
-	rSimpleArgs& addOption(const std::string& name, const unsigned char altname, const std::string&  default_value);
+	rSimpleArgs& addOption(const std::string& name, const unsigned char altname, const std::string& default_value);
+	rSimpleArgs& setSwitch(const std::string& name, bool isset);
+	rSimpleArgs& setOption(const std::string& name, const std::string& value);
 	unsigned int isSet(const std::string& name);
 	std::string  getOption(const std::string& name);
 	std::string  getArgument(unsigned int num);
 	unsigned int getCountArgument(void);
-	unsigned int parse(unsigned int argc, char **argv);
+	unsigned int parse(unsigned int argc, const char **argv);
 
 private:
 	std::vector<rSimpleArgs::rItem> m_list;
