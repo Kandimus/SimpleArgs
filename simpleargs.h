@@ -54,7 +54,7 @@ private:
 	std::vector<rSimpleArgs::rItem> m_list;
 	std::vector<std::string> m_argument;
 
-	const rItem* findItem(const std::string& name);
+	rItem* findItem(const std::string& name);
 	void parseShort(const std::string& arg);
 	rItem* parseFull(const std::string& arg);
 };

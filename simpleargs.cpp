@@ -25,7 +25,7 @@ rSimpleArgs::~rSimpleArgs()
 
 }
 
-const rSimpleArgs::rItem* rSimpleArgs::findItem(const std::string& name)
+rSimpleArgs::rItem* rSimpleArgs::findItem(const std::string& name)
 {
 	for(auto& item : m_list) {
 		if (item.m_fullname == name) {
@@ -38,29 +38,72 @@ const rSimpleArgs::rItem* rSimpleArgs::findItem(const std::string& name)
 
 rSimpleArgs& rSimpleArgs::addSwitch(const std::string& name, const unsigned char shortname)
 {
-	m_list.push_back(rSimpleArgs::rItem());
+	rItem* item = findItem(name);
 
-	m_list.back().m_isSwitch  = true;
-	m_list.back().m_isSet     = 0;
-	m_list.back().m_fullname  = name;
-	m_list.back().m_shortname = shortname;
-	m_list.back().m_value     = "";
+	if (item == nullptr) {
+		m_list.push_back(rSimpleArgs::rItem());
+		item = &m_list.back();
+	}
+
+	item->m_isSwitch  = true;
+	item->m_isSet     = 0;
+	item->m_fullname  = name;
+	item->m_shortname = shortname;
+	item->m_value     = "";
 
 	return *this;
 }
 
 rSimpleArgs& rSimpleArgs::addOption(const std::string& name, const unsigned char shortname, const std::string&  default_value)
 {
-	m_list.push_back(rSimpleArgs::rItem());
+	rItem* item = findItem(name);
 
-	m_list.back().m_isSwitch  = false;
-	m_list.back().m_isSet     = 0;
-	m_list.back().m_fullname  = name;
-	m_list.back().m_shortname = shortname;
-	m_list.back().m_value     = default_value;
+	if (item == nullptr) {
+		m_list.push_back(rSimpleArgs::rItem());
+		item = &m_list.back();
+	}
+
+	item->m_isSwitch  = false;
+	item->m_isSet     = 0;
+	item->m_fullname  = name;
+	item->m_shortname = shortname;
+	item->m_value     = default_value;
 
 	return *this;
 }
+
+rSimpleArgs& rSimpleArgs::setSwitch(const std::string& name, bool isset)
+{
+	rItem* item = findItem(name);
+
+	if (item == nullptr) {
+		m_list.push_back(rSimpleArgs::rItem());
+		item = &m_list.back();
+
+		item->m_fullname = name;
+	}
+
+	m_list.back().m_isSet = isset;
+
+	return *this;
+}
+
+rSimpleArgs& rSimpleArgs::setOption(const std::string& name, const std::string&  value)
+{
+	rItem* item = findItem(name);
+
+	if (item == nullptr) {
+		m_list.push_back(rSimpleArgs::rItem());
+		item = &m_list.back();
+
+		item->m_fullname = name;
+	}
+
+	item->m_value = value;
+
+	return *this;
+}
+
 
 unsigned int rSimpleArgs::isSet(const std::string& name)
 {
