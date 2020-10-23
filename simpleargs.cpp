@@ -83,7 +83,7 @@ rSimpleArgs& rSimpleArgs::setSwitch(const std::string& name, bool isset)
 		item->m_fullname = name;
 	}
 
-	m_list.back().m_isSet = isset;
+	item->m_isSet = isset;
 
 	return *this;
 }
@@ -100,6 +100,7 @@ rSimpleArgs& rSimpleArgs::setOption(const std::string& name, const std::string& 
 	}
 
 	item->m_value = value;
+	item->m_isSet = isset;
 
 	return *this;
 }
