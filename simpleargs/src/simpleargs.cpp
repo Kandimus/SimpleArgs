@@ -154,6 +154,8 @@ unsigned int rSimpleArgs::parse(unsigned int argc, const char **argv)
 			if (curarg) {
 				if (curarg->m_isSwitch) {
 					curarg = nullptr;
+				} else if (curarg->m_isSet) {
+					curarg = nullptr;
 				}
 				continue;
 			}
