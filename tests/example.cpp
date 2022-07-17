@@ -10,7 +10,7 @@ void printOption(const std::string& name)
 	printf("'%s' = '%s' (%u)\n", name.c_str(), rSimpleArgs::instance().getOption(name).c_str(), rSimpleArgs::instance().isSet(name));
 }
 
-int main(unsigned int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	rSimpleArgs::instance()
 			.addSwitch(ARG_FIRST, 'a')
