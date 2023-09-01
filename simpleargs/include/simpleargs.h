@@ -164,7 +164,30 @@ private:
         }
     }
 
-	rItem* parseFull(const std::string& arg);
+    rItem* parseFull(const std::string& arg)
+    {
+        std::string name = arg.substr(2);
+        std::string value = "";
+        int pos = name.find('=');
+
+        if (pos >= 0) {
+            value = name.substr(pos + 1);
+            name  = name.substr(0, pos);
+        }
+
+        for (auto& item : m_list) {
+            if (item.m_fullname == name) {
+                item.m_isSet += pos >= 0;
+                if (value.size()) {
+                    item.m_value = value;
+                }
+
+                return &item;
+            }
+        }
+
+        return nullptr;
+    }
 };
 
 

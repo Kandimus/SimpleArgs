@@ -63,30 +63,3 @@ unsigned int rSimpleArgs::parse(unsigned int argc, const char **argv)
 
 	return 0;
 }
-
-rSimpleArgs::rItem* rSimpleArgs::parseFull(const std::string& arg/*, bool& valueSet*/)
-{
-    std::string name = arg.substr(2);
-	std::string value = "";
-	int pos = name.find('=');
-
-    //valueSet = false;
-	if (pos >= 0) {
-		value = name.substr(pos + 1);
-		name  = name.substr(0, pos);
-        //valueSet = true;
-	}
-
-	for (auto& item : m_list) {
-		if (item.m_fullname == name) {
-            item.m_isSet += pos >= 0;
-			if (value.size()) {
-				item.m_value = value;
-			}
-
-			return &item;
-		}
-	}
-
-	return nullptr;
-}
